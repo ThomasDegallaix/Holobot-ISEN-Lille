@@ -1,0 +1,96 @@
+{
+    "sequences": [
+        {
+            "name": "first",
+            "stations": [
+                1,
+                0
+            ],
+            "isMain": true
+        },
+        {
+            "name": "second",
+            "stations": [
+                1,
+                3,
+                0
+            ],
+            "isMain": false
+        },
+        {
+            "name": "third",
+            "stations": [
+                1,
+                3,
+                2
+            ],
+            "isMain": false
+        },
+        {
+            "name": "four",
+            "stations": [
+                1,
+                2,
+                3,
+                0,
+                1,
+                0
+            ],
+            "isMain": false
+        },
+        {
+            "name": "tesla",
+            "stations": [
+                1,
+                2,
+                3,
+                2,
+                0,
+                1,
+                2,
+                0
+            ],
+            "isMain": false
+        }
+    ],
+    "ipStations": [
+        {
+            "ip": "192.168.43.210",
+            "isStation": true
+        }
+    ],
+    "ipRobots": [
+        {
+            "ip": "192.168.43.48",
+            "robotType": 0,
+            "robotName": "robot ISEN 1"
+        },
+        {
+            "ip": "mqtt://192.168.0.103:1883",
+            "robotType": 1,
+            "robotName": "Hexapod 1"
+        }
+    ],
+    "ipClients": [
+        {
+            "address": "192.168.43.1",
+            "robotSelected": "robot ISEN 1"
+        },
+        {
+            "address": "192.168.0.112",
+            "robotSelected": "Hexapod 1"
+        },
+        {
+            "address": "192.168.0.109",
+            "robotSelected": "Hexapod 1"
+        },
+        {
+            "address": "192.168.0.105",
+            "robotSelected": "robot ISEN 1"
+        },
+        {
+            "address": "192.168.0.117",
+            "robotSelected": "robot ISEN 1"
+        }
+    ]
+}
