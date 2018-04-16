@@ -126,6 +126,23 @@ var dataPacketSTOP = {
   }
 };
 
+var dataPacketModeButton = {
+  "receiver" : "HEXAPOD_ID",
+  "sender" : "HOLOLENS_ID",
+  "body_message":
+  {
+    "func" : "hexapodMode",
+    "parameters":
+    {
+      "V_right_joystick" : 128,
+      "H_right_joystick" : 128,
+      "V_left_joystick" : 128,
+      "H_left_joystick" : 128,
+      "buttons" : 128
+    }
+  }
+};
+
 
 // Here we change our JSONs to strings
 var dataPacketUpJSON = JSON.stringify(dataPacketUp);
@@ -136,6 +153,7 @@ var dataPacketGoRightJSON = JSON.stringify(dataPacketGoRight);
 var dataPacketStopJSON = JSON.stringify(dataPacketSTOP);
 var dataPacketHandJSON = JSON.stringify(dataPacketRobotArm);
 var dataPacketChangeColorJSON = JSON.stringify(dataPacketChangeColor);
+var dataPacketModeJSON = JSON.stringify(dataPacketModeButton);
 
 /* End of our message creation */
 
