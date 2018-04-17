@@ -201,7 +201,7 @@ function controlRobot(data, sock, fs, mqttClient, request, setup) {
           break;
         case '5':
           mqttClient.publish(setup.tin, dataPacketUpJSON, {qos: setup.qos});
-          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketSTOP},{qos: setup.qos}),1000);
+          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},1000);
           break;
         default:
           console.log("Not Implement yet!");
