@@ -136,6 +136,11 @@ mqtt.on('message', function(topic, message) {
 		console.log(robotArm_data);
 		serial2.write(robotArm_data);
 	}
+
+	else if(data_packet.receiver === "HEAD_ID") {
+		console.log("<<< Message from Hololens to Robot Head >>>\n")
+		//TODO
+	}
 });
 
 

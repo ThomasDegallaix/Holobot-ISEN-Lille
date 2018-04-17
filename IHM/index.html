@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HoloBot UI |</title>
+    <style>
+    #jeu {
+    position:absolute;
+    transition: .5s ease;
+    top: -37%;
+    left: 15%;
+    width: 75%;
+    height: 150%;
+    }
+    #stepForwardButton {
+    position:absolute;
+    transition: .5s ease;
+    top: 36%;
+    left: 34.5%;
+    width: 5.5%;
+    height: 12%;
+    font-size: 200%;
+    }
+    #stepBackwardButton {
+    position:absolute;
+    transition: .5s ease;
+    top: 58.5%;
+    left: 34.5%;
+    width: 5.5%;
+    height: 12%;
+    font-size: 200%;
+    }
+    #stopButton {
+    position:absolute;
+    transition: .5s ease;
+    top: 47.5%;
+    left: 34.5%;
+    width: 5.5%;
+    height: 12%;
+    font-size: 200%;
+    }
+    #stepLeftButton {
+    position:absolute;
+    transition: .5s ease;
+    top: 47.5%;
+    left: 29%;
+    width: 5.5%;
+    height: 12%;
+    font-size: 200%;
+    }
+    #stepRightButton {
+    position:absolute;
+    transition: .5s ease;
+    top: 47.5%;
+    left: 40%;
+    width: 5.5%;
+    height: 12%;
+    font-size: 200%;
+    }
+    #standUpButton {
+    position:absolute;
+    transition: .5s ease;
+    top: 36%;
+    left: 64.55%;
+    width: 6.5%;
+    height: 14%;
+    border-radius: 60%;
+    font-size: 200%;
+    }
+    #sitDownButton {
+    position:absolute;
+    transition: .5s ease;
+    top: 56.5%;
+    left: 64.55%;
+    width: 6.5%;
+    height: 14%;
+    border-radius: 60%;
+    font-size: 200%;
+    }
+    #demoButton {
+    position:absolute;
+    transition: .5s ease;
+    top: 35%;
+    left: 46.25%;
+    width: 12%;
+    height: 8%;
+    font-size: 200%;
+    }
+    #dashboardButton {
+    position:absolute;
+    transition: .5s ease;
+    top: 16.5%;
+    left: 0%;
+    width: 15%;
+    height: 8%;
+    font-size: 200%;
+    }
+    #gitButton {
+    position:absolute;
+    transition: .5s ease;
+    top: 25.5%;
+    left: 0%;
+    width: 8%;
+    height: 8%;
+    font-size: 200%;
+    }
+    #blackDroitButton {
+    position:absolute;
+    transition: .5s ease;
+    top: 46.5%;
+    left: 69.5%;
+    width: 6.5%;
+    height: 14%;
+    border-radius: 60%;
+    font-size: 200%;
+    }
+    #blackGaucheButton {
+    position:absolute;
+    transition: .5s ease;
+    top: 46.5%;
+    left: 59.5%;
+    width: 6.5%;
+    height: 14%;
+    border-radius: 60%;
+    font-size: 200%;
+    }
+  </style>
+  </head>
+  <body>
+    <script src="socket.io/socket.io.js"></script>
+    <script>
+      var socket = io.connect('http://192.168.0.112:8080');
+
+      function testSendForward(){
+        socket.emit('message1','message');
+      }
+      function testSendStop(){
+        socket.emit('message0','message');
+      }
+      function testSendBackward(){
+        socket.emit('message2','message');
+      }
+      function testSendStepLeft(){
+        socket.emit('message4','message');
+      }
+      function testSendStepRight(){
+        socket.emit('message3','message');
+      }
+      function testSendStandUp(){
+        socket.emit('message5','message');
+      }
+      function testSendSitDown(){
+        socket.emit('message6','message');
+      }
+    </script>
+    <div class="containers">
+      <h1 class="bg-success">HOLOBOT ISEN LILLE</h1>
+      <p><kbd>Projet 2017/2018</kbd></p>
+      <img src="game.png" id="jeu">
+        <div class="caption">
+          <button type="button" value="Forward" id="stepForwardButton"
+          title="stepForwardButton" onclick="testSendForward()" class="btn btn-primary btn-carré"> <span class="glyphicon glyphicon-chevron-up"></span> </button>
+          <button type="button"  value="Back" id="stepBackwardButton"
+          title="stepBackwardButton" onclick="testSendBackward()" class="btn btn-primary btn-carré"> <span class="glyphicon glyphicon-chevron-down"></span> </button>
+          <button type="button"  value="Stop" id="stopButton"
+          title="stopButton" onclick="testSendStop()" class="btn btn-danger btn-carré"> <span class="glyphicon glyphicon-remove-circle"></span> </button>
+          <button type="button"  id="stepLeftButton" value="Left"
+          title="stepLeftButton" onclick="testSendStepLeft()" class="btn btn-primary btn-carré"> <span class="glyphicon glyphicon-chevron-left"></span> </button>
+          <button type="button"  id="stepRightButton" value="Right"
+          title="stepRightButton" onclick="testSendStepRight()" class="btn btn-primary btn-carré"> <span class="glyphicon glyphicon-chevron-right"></span> </button>
+          <button type="button"  id="standUpButton" value="Up"
+          title="standUpButton" onclick="testSendStandUp()" class="btn btn-warning btn-circle"> <span class="glyphicon glyphicon-collapse-up"></span> </button>
+          <button type="button"  id="sitDownButton" value="Down"
+          title="sitDown" onclick="testSendSitDown()" class="btn btn-warning btn-circle"> <span class="glyphicon glyphicon-collapse-down"></span> </button>  
+          <button type="button"  id="demoButton" value="Demo"
+          title="blackDroit" class="btn btn-danger btn-rectangle">Démo</button> 
+          <button type="button"  id="blackDroitButton" value="blackDroit"
+          title="blackDroit" class="btn btn-circle"></button> 
+          <button type="button"  id="blackGaucheButton" value="blackGauche"
+          title="blackGauche" class="btn btn-circle"></button> 
+          <a href="https://github.com/DavidDESM/Holobot-ISEN-Lille" target="_blank"> <button type="button"  id="dashboardButton" value="dashboard"
+          title="dashboard" class="btn btn-rectangle">Dashboard</button> </a>
+          <a href="https://github.com/DavidDESM/Holobot-ISEN-Lille" target="_blank"> <button type="button"  id="gitButton" value="git"
+          title="git" class="btn btn-rectangle">Git</button> </a>
+        </div>
+    </div>
+  </body>
+</html>
