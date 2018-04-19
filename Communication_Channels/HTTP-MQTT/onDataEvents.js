@@ -143,41 +143,44 @@ var dataPacketModeButton = {
   }
 };
 
-//Messages pour la démo en attendant d'avoir écrit le code des joysticks
-var dataPacketLegLeft = {
-  "receiver" : "HEXAPOD_ID",
-  "sender" : "HOLOLENS_ID",
-  "body_message":
-  {
-    "func" : "legLeft",
-    "parameters":
+function hexapodMovement(V_right_joystick,H_right_joystick,V_left_joystick,H_left_joystick,buttons){
+  var dataPacket = {
+    "receiver" : "HEXAPOD_ID",
+    "sender" : "HOLOLENS_ID",
+    "body_message":
     {
-      "V_right_joystick" : 128,
-      "H_right_joystick" : 128,
-      "V_left_joystick" : 1,
-      "H_left_joystick" : 254,
-      "buttons" : 0
+      "func" : "",
+      "parameters":
+      {
+        "V_right_joystick" : V_right_joystick,
+        "H_right_joystick" : H_right_joystick,
+        "V_left_joystick" : V_left_joystick,
+        "H_left_joystick" : H_left_joystick,
+        "buttons" : buttons
+      }
     }
-  }
-};
+  };
 
-var dataPacketLegRight = {
-  "receiver" : "HEXAPOD_ID",
-  "sender" : "HOLOLENS_ID",
-  "body_message":
-  {
-    "func" : "legRight",
-    "parameters":
-    {
-      "V_right_joystick" : 128,
-      "H_right_joystick" : 128,
-      "V_left_joystick" : 254,
-      "H_left_joystick" : 1,
-      "buttons" : 0
-    }
-  }
-};
+  var dataPacketJSON = JSON.stringify(dataPacket);
+  return dataPacketJSON;
+}
 
+//Global variable to know in which mode the hexapod is
+var mode = 0; 
+/*Switch mode until you reach the desired mode
+0 : control of every leg
+1 : swing 1
+2 : swing 2
+3 : single leg
+4 : nothing discovered yet
+*/
+function switchMode(desiredMode){
+  while(mode != desiredMode) {
+    mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
+    mqttClient.publish(setup.tin, dataPacketStopJSON, {qos: setup.qos});
+    mode = (mode + 1)%5;
+  }
+}
 
 
 // Here we change our JSONs to strings
@@ -190,9 +193,6 @@ var dataPacketStopJSON = JSON.stringify(dataPacketSTOP);
 var dataPacketHandJSON = JSON.stringify(dataPacketRobotArm);
 var dataPacketChangeColorJSON = JSON.stringify(dataPacketChangeColor);
 var dataPacketModeJSON = JSON.stringify(dataPacketModeButton);
-//Trames temporaires
-var dataPacketLegLeftJSON = JSON.stringify(dataPacketLegLeft);
-var dataPacketLegRightJSON = JSON.stringify(dataPacketLegRight);
 
 
 
@@ -258,14 +258,25 @@ function controlRobot(data, sock, fs, mqttClient, request, setup) {
           /*Put its right front leg up*/
           for(var i = 0; i<3; i++) { //needs to be in the 3rd button mode to move a single leg
             mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
+            mqttClient.publish(setup.tin, dataPacketStopJSON, {qos: setup.qos});
           }
           mqttClient.publish(setup.tin, dataPacketGoForwardJSON, {qos: setup.qos});
-          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketLegRightJSON,{qos: setup.qos});},3000);
-          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketLegLeftJSON,{qos: setup.qos});},1000);
+          setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,128,254,1,0),{qos: setup.qos});},3000);
+          setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,128,1,254,0),{qos: setup.qos});},1000);
           setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},3000);
           /*Go Forward during 3 sec*/
+          for(var j = 0; j<2; j++) { //needs to be in the 1st button mode to move a single leg
+            mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
+            mqttClient.publish(setup.tin, dataPacketStopJSON, {qos: setup.qos});
+          }
           setTimeout(function(){mqttClient.publish(setup.tin, dataPacketGoForwardJSON,{qos: setup.qos});},1000);
-          setTimeout(function(){mqttClient.publish(setup.tin, ,{qos: setup.qos});},2000);
+          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},2000);
+          /*Go right*/
+          setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,254,128,128,0),{qos: setup.qos});},2000);
+          /*Go left*/
+          setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,1,128,128,0),{qos: setup.qos});},2000);
+          /*Swing*/
+
 
 
           break;
