@@ -156,6 +156,9 @@
       function testSendSitDown(){
         socket.emit('message6','message');
       }
+      function testSendDemo1() {
+      	socket.emit('message7','message');
+      }
     </script>
     <div class="containers">
       <h1 class="bg-success">HOLOBOT ISEN LILLE</h1>
@@ -177,7 +180,7 @@
           <button type="button"  id="sitDownButton" value="Down"
           title="sitDown" onclick="testSendSitDown()" class="btn btn-warning btn-circle"> <span class="glyphicon glyphicon-collapse-down"></span> </button>  
           <button type="button"  id="demoButton" value="Demo"
-          title="blackDroit" class="btn btn-danger btn-rectangle">Démo</button> 
+          title="blackDroit" onclick="testSendDemo1()" class="btn btn-danger btn-rectangle">Démo</button> 
           <button type="button"  id="blackDroitButton" value="blackDroit"
           title="blackDroit" class="btn btn-circle"></button> 
           <button type="button"  id="blackGaucheButton" value="blackGauche"

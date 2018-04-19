@@ -13,21 +13,13 @@ Servo sg90;
 
 /* Define the shake hand function */
 void shake_hand() {
-  sg90.write(0);
+  //sg90.write(0);
   mg995_1.write(0);
-  mg995_2.write(0);
+  //mg995_2.write(0);
   delay(500);
-  sg90.write(90);
-  mg995_1.write(90);
-  mg995_2.write(90);
-  delay(500);
-  sg90.write(0);
-  mg995_1.write(0);
-  mg995_2.write(0);
-  delay(500);
-  sg90.write(90);
-  mg995_1.write(90);
-  mg995_2.write(90);
+  //sg90.write(90);
+  mg995_1.write(45);
+  //te(90);
   delay(500);
   memset(command, '\0', 50);
 }
@@ -36,9 +28,9 @@ void shake_hand() {
 /* Setup the system */
 void setup() {
   Serial.begin(9600);
-  sg90.attach(2);
+  //sg90.attach(2);
   mg995_1.attach(3);
-  mg995_2.attach(4);
+  //mg995_2.attach(4);
   pinMode(LED_BUILTIN, OUTPUT);
 }
 
@@ -58,7 +50,7 @@ void loop() {
     
   }
   //WARNING: this delay is compulsory for the next test
-  delay(100);
+  delay(300);
   /* Treating the data received from the Serial */
   if(!strcmp(command,"handshake")){
     Serial.println(command);

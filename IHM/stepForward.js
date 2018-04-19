@@ -27,11 +27,9 @@ io.sockets.on('connection', function (socket) {
     socket.on('message0',function(message){
       stop();
     });
-
     socket.on('message1',function(message){
       stepForward();
     });
-
     socket.on('message2',function(message){
       stepBackward();
     });
@@ -47,6 +45,9 @@ io.sockets.on('connection', function (socket) {
     socket.on('message6',function(message){
       sitDown();
     });
+    socket.on('message7',function(message)){
+      demo1();
+    }
 });
 
 
@@ -78,8 +79,12 @@ function standUp(){
   client.write('controlRobot:5')
 }
 function sitDown(){
-  console.log('Down')
-  client.write('controlRobot:6')
+  console.log('Down');
+  client.write('controlRobot:6');
+}
+function demo1(){
+  console.log('Demo1');
+  client.write('controlRobot:Demo1');
 }
 
 // 0 arret
