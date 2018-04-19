@@ -203,6 +203,20 @@ function controlRobot(data, sock, fs, mqttClient, request, setup) {
           mqttClient.publish(setup.tin, dataPacketUpJSON, {qos: setup.qos});
           setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},1000);
           break;
+        case '6':
+          mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
+          break;
+        case '7':
+          /*Sit up*/
+          mqttClient.publish(setup.tin, dataPacketUpJSON, {qos: setup.qos});
+          /*Put its right front leg up*/
+          for(var i = 0; i<3; i++) { //needs to be in the 3rd button mode to move a single leg
+            mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
+          }
+          mqttClient.publish(setup.tin, dataPacketGoForwardJSON, {qos: setup.qos});
+          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},1000);
+
+          break;
         default:
           console.log("Not Implement yet!");
       }
