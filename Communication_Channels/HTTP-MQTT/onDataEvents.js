@@ -276,7 +276,24 @@ function controlRobot(data, sock, fs, mqttClient, request, setup) {
           /*Go left*/
           setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,1,128,128,0),{qos: setup.qos});},2000);
           /*Swing*/
-
+              j=128;
+          for(i = 1; i<255; i++) {
+              if(i<128) {
+                  j+=1;
+              }
+              else if(i>=128){
+                  j-=1;
+              }
+              
+          }
+          for(i = 254; i>0; i--) {
+              if(i<128) {
+                  j+=1;
+              }
+              else if(i>=128){
+                  j-=1;
+              }
+          }  
 
 
           break;

@@ -1,0 +1,7 @@
+Here are all the ressources concerning the MQTT server of the project
+
+https://projetsdiy.fr/mosquitto-broker-mqtt-raspberry-pi/
+
+command lines:
+for publishing -->  mosquitto_pub -h 192.168.1.241 -t mqtt_server_hololens -m "Ta mere Laura"
+for subscribing --> mosquitto_sub -h 192.168.1.241 -t "mqtt_server_hololens"
