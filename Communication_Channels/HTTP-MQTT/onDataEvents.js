@@ -165,8 +165,7 @@ function hexapodMovement(V_right_joystick,H_right_joystick,V_left_joystick,H_lef
   return dataPacketJSON;
 }
 
-//Global variable to know in which mode the hexapod is
-var mode = 0; 
+
 /*Switch mode until you reach the desired mode
 0 : control of every leg
 1 : swing 1
@@ -201,6 +200,8 @@ var dataPacketModeJSON = JSON.stringify(dataPacketModeButton);
 /* Methods for data gestion */
 function controlRobot(data, sock, fs, mqttClient, request, setup) {
   console.log("here");
+  //Global variable to know in which mode the hexapod is
+  var mode = 0; 
   var array = data.toString().split(':');
   var robotControlled;
   var ipRobotControlled;
@@ -253,22 +254,29 @@ function controlRobot(data, sock, fs, mqttClient, request, setup) {
           mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
           break;
         case '8':
-          /*Sit up*/
+          /*Stand up*/
           mqttClient.publish(setup.tin, dataPacketUpJSON, {qos: setup.qos});
           /*Put its right front leg up*/
+          /*
           for(var i = 0; i<3; i++) { //needs to be in the 3rd button mode to move a single leg
             mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
             mqttClient.publish(setup.tin, dataPacketStopJSON, {qos: setup.qos});
           }
+          */
+          switchMode(3);
           mqttClient.publish(setup.tin, dataPacketGoForwardJSON, {qos: setup.qos});
+          /*Say hi !*/
           setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,128,254,1,0),{qos: setup.qos});},3000);
           setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,128,1,254,0),{qos: setup.qos});},1000);
           setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},3000);
           /*Go Forward during 3 sec*/
+          /*
           for(var j = 0; j<2; j++) { //needs to be in the 1st button mode to move a single leg
             mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
             mqttClient.publish(setup.tin, dataPacketStopJSON, {qos: setup.qos});
           }
+          */
+          switchMode(2);
           setTimeout(function(){mqttClient.publish(setup.tin, dataPacketGoForwardJSON,{qos: setup.qos});},1000);
           setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},2000);
           /*Go right*/
@@ -276,26 +284,34 @@ function controlRobot(data, sock, fs, mqttClient, request, setup) {
           /*Go left*/
           setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,1,128,128,0),{qos: setup.qos});},2000);
           /*Swing*/
-              j=128;
+          var j=128;
           for(i = 1; i<255; i++) {
               if(i<128) {
                   j+=1;
+                  hexapodMovement(128,128,i,j,0);
               }
               else if(i>=128){
                   j-=1;
+                  hexapodMovement(128,128,i,j,0);
               }
               
           }
           for(i = 254; i>0; i--) {
               if(i<128) {
                   j+=1;
+                  hexapodMovement(128,128,i,j,0);
               }
               else if(i>=128){
                   j-=1;
+                  hexapodMovement(128,128,i,j,0);
               }
-          }  
-
-
+          }
+          /*Stand up as far as possible*/
+          setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(1,128,128,128,0),{qos: setup.qos});},2000);
+          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},5000);
+          /*Sit down*/
+          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketUpJSON,{qos: setup.qos});},5000);
+          /*end of the demo*/
           break;
         default:
           console.log("Not Implement yet!");
