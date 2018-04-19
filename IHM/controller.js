@@ -45,7 +45,10 @@ io.sockets.on('connection', function (socket) {
     socket.on('message6',function(message){
       sitDown();
     });
-    socket.on('message7',function(message)){
+    socket.on('message7',function(message){
+      changeButtonMode();
+    })
+    socket.on('message8',function(message)){
       demo1();
     }
 });
@@ -82,9 +85,13 @@ function sitDown(){
   console.log('Down');
   client.write('controlRobot:6');
 }
+function changeButtonMode(){
+  console.log('Changing button mode');
+  client.write('controlRobot:7');
+}
 function demo1(){
   console.log('Demo1');
-  client.write('controlRobot:7');
+  client.write('controlRobot:8');
 }
 
 // 0 arret

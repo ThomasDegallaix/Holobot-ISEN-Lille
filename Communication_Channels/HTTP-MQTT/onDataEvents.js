@@ -204,9 +204,14 @@ function controlRobot(data, sock, fs, mqttClient, request, setup) {
           setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},1000);
           break;
         case '6':
+          mqttClient.publish(setup.tin, dataPacketUpJSON, {qos: setup.qos});
+          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},1000);
           mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
           break;
         case '7':
+          mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
+            break;
+        case '8':
           /*Sit up*/
           mqttClient.publish(setup.tin, dataPacketUpJSON, {qos: setup.qos});
           /*Put its right front leg up*/
@@ -214,7 +219,8 @@ function controlRobot(data, sock, fs, mqttClient, request, setup) {
             mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
           }
           mqttClient.publish(setup.tin, dataPacketGoForwardJSON, {qos: setup.qos});
-          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},1000);
+          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},3000);
+          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},3000);
 
           break;
         default:
