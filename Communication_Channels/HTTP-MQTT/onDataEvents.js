@@ -16,7 +16,7 @@ var dataPacketGoForward = {
   }
 };
 
-var dataPacketGoBackword = {
+var dataPacketGoBackward = {
   "receiver" : "HEXAPOD_ID",
   "sender" : "HOLOLENS_ID",
   "body_message":
@@ -143,17 +143,58 @@ var dataPacketModeButton = {
   }
 };
 
+//Messages pour la démo en attendant d'avoir écrit le code des joysticks
+var dataPacketLegLeft = {
+  "receiver" : "HEXAPOD_ID",
+  "sender" : "HOLOLENS_ID",
+  "body_message":
+  {
+    "func" : "legLeft",
+    "parameters":
+    {
+      "V_right_joystick" : 128,
+      "H_right_joystick" : 128,
+      "V_left_joystick" : 1,
+      "H_left_joystick" : 254,
+      "buttons" : 0
+    }
+  }
+};
+
+var dataPacketLegRight = {
+  "receiver" : "HEXAPOD_ID",
+  "sender" : "HOLOLENS_ID",
+  "body_message":
+  {
+    "func" : "legRight",
+    "parameters":
+    {
+      "V_right_joystick" : 128,
+      "H_right_joystick" : 128,
+      "V_left_joystick" : 254,
+      "H_left_joystick" : 1,
+      "buttons" : 0
+    }
+  }
+};
+
+
 
 // Here we change our JSONs to strings
 var dataPacketUpJSON = JSON.stringify(dataPacketUp);
 var dataPacketGoForwardJSON = JSON.stringify(dataPacketGoForward);
-var dataPacketGoBackwardJSON = JSON.stringify(dataPacketGoBackword);
+var dataPacketGoBackwardJSON = JSON.stringify(dataPacketGoBackward);
 var dataPacketGoLeftJSON = JSON.stringify(dataPacketGoLeft);
 var dataPacketGoRightJSON = JSON.stringify(dataPacketGoRight);
 var dataPacketStopJSON = JSON.stringify(dataPacketSTOP);
 var dataPacketHandJSON = JSON.stringify(dataPacketRobotArm);
 var dataPacketChangeColorJSON = JSON.stringify(dataPacketChangeColor);
 var dataPacketModeJSON = JSON.stringify(dataPacketModeButton);
+//Trames temporaires
+var dataPacketLegLeftJSON = JSON.stringify(dataPacketLegLeft);
+var dataPacketLegRightJSON = JSON.stringify(dataPacketLegRight);
+
+
 
 /* End of our message creation */
 
@@ -210,7 +251,7 @@ function controlRobot(data, sock, fs, mqttClient, request, setup) {
           break;
         case '7':
           mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
-            break;
+          break;
         case '8':
           /*Sit up*/
           mqttClient.publish(setup.tin, dataPacketUpJSON, {qos: setup.qos});
@@ -219,8 +260,13 @@ function controlRobot(data, sock, fs, mqttClient, request, setup) {
             mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
           }
           mqttClient.publish(setup.tin, dataPacketGoForwardJSON, {qos: setup.qos});
+          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketLegRightJSON,{qos: setup.qos});},3000);
+          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketLegLeftJSON,{qos: setup.qos});},1000);
           setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},3000);
-          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},3000);
+          /*Go Forward during 3 sec*/
+          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketGoForwardJSON,{qos: setup.qos});},1000);
+          setTimeout(function(){mqttClient.publish(setup.tin, ,{qos: setup.qos});},2000);
+
 
           break;
         default:
