@@ -1,5 +1,5 @@
 {
-    "mqtt": "mqtt://192.168.0.101:1883",
+    "mqtt": "mqtt://192.168.0.103:1883",
     "tout": "robot/out",
     "tin": "robot/in",
     "qos": 2
