@@ -9,7 +9,27 @@ console.log("Launching gateway ...\n");
 /* /!\/!\/!\ You need to plug the hexapod on the first usb port and the arm + head on the second usb because serial1 is configured to have a baudrate at 38400 which is specified only for the hexapod /!\/!\/!\ */
 
 const serial1 = new SerialPort(setup.port1, {baudRate: setup.rate1}); 
-const serial2 = new SerialPort(setup.port2, {baudRate: setup.rate2});
+var serial2 ;
+
+SerialPort.list(function (err, ports) {
+	ports.forEach(function(port) {
+/*
+		if (port.comName === '/dev/ttyACM0') {
+			portSerial1 = port.comName.toString();
+			console.log("Device 1 plugged on serial port " + port.comName + "\n");
+		} */
+		if (port.comName === '/dev/ttyACM1') {
+			var portSerial2 = port.comName.toString();
+			console.log("Device 2 plugged on serial port " + port.comName + "\n");
+			serial2 = new SerialPort(portSerial2, {baudRate: setup.rate2});
+		}
+		else if (port.comName === '/dev/ttyACM2'){
+			var portSerial2 = port.comName.toString();
+			console.log("Device 2 plugged on serial port " + port.comName + "\n");
+			serial2 = new SerialPort(portSerial2, {baudRate: setup.rate2});
+		}
+	});	
+});
 
 /*
 var portSerial1;
@@ -109,7 +129,7 @@ mqtt.on('message', function(topic, message) {
 		hexapod_data[6] = 0x00;
 		hexapod_data[7] = arbotix_checksum(data_packet.body_message.parameters);
 /*
-		if (hexapod_func === "hexapodUpDown"  ||  hexapod_func === "hexapodMode") {
+		if (hexapod_func === "hexapodMode") {
 			//The data has to be sent only 1 time 
 			serial1.write(hexapod_data);
 			console.log(hexapod_data);
@@ -135,11 +155,6 @@ mqtt.on('message', function(topic, message) {
 		var robotArm_data = data_packet.body_message.func;
 		console.log(robotArm_data);
 		serial2.write(robotArm_data);
-	}
-
-	else if(data_packet.receiver === "HEAD_ID") {
-		console.log("<<< Message from Hololens to Robot Head >>>\n")
-		//TODO
 	}
 });
 
