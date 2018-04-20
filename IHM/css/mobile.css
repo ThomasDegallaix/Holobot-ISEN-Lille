@@ -1,0 +1,123 @@
+h1 {
+	font-size: 30px;
+}
+
+h2 {
+	font-size: 20px;
+}
+
+.btn-circle {
+  padding: 0.5px 0.2px;
+}
+
+.btn-rectangle{
+  padding: 0px 0.5px;
+}
+
+.btn-carré{
+  padding: 0px 0px;
+}
+
+#jeu {
+  top:0px;
+}
+
+#stepForwardButton {
+  top: 140%;
+  left: 25%;
+  width: 9%;
+  height: 13%;
+  font-size: 50%;
+}
+
+#stepBackwardButton {
+  top: 165%;
+  left: 25%;
+  width: 9%;
+  height: 13%;
+  font-size: 50%;
+}
+
+#stopButton {
+  top: 152%;
+  left: 25.5%;
+  width: 9%;
+  height: 13%;
+  font-size: 50%;
+}
+
+#stepLeftButton {
+  top: 152%;
+  left: 17.5%;
+  width: 9%;
+  height: 13%;
+  font-size: 50%;
+}
+
+#stepRightButton {
+  top: 152%;
+  left: 34%;
+  width: 9%;
+  height: 13%;
+  font-size: 50%;
+}
+
+#standUpButton {
+  top: 139.5%;
+  left: 65.5%;
+  height: 15%;
+  font-size: 50%;
+}
+
+#sitDownButton {
+  top: 162%;
+  left: 65.5%;
+  height: 15%;
+  font-size: 50%;
+}
+
+#demoButton {
+  top: 140%;
+  left: 43%;
+  width: 17%;
+  height: 12%;
+  font-size: 50%;
+}
+
+#modeButton {
+  top: 161%;
+  left: 43%;
+  width: 17%;
+  height: 12%;
+  font-size: 50%;
+}
+
+#blackDroitButton {
+  top: 151%;
+  left: 72.65%;
+  height: 14%;
+  font-size: 50%;
+}
+
+#blackGaucheButton {
+  top: 151%;
+  left: 58%;
+  height: 14%;
+  font-size: 50%;
+}
+
+#dashboardButton {
+  top: 0%;
+  left: 0%;
+  width: 0%;
+  height: 0%;
+  font-size: 0%;
+}
+
+#gitButton {
+  top: 0%;
+  left: 0%;
+  width: 0%;
+  height: 0%;
+  font-size: 0%;
+}

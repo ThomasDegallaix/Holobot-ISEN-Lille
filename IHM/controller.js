@@ -10,7 +10,7 @@ client.connect(8080, '192.168.0.113', function(){
 
 // Chargement du fichier index.html affiché au client
 var server = http.createServer(function(req, res) {
-    fs.readFile('./index.html', 'utf-8', function(error, content) {
+    fs.readFile('index.html', 'utf-8', function(error, content) {
         res.writeHead(200, {"Content-Type": "text/html"});
         res.end(content);
     });
@@ -47,10 +47,10 @@ io.sockets.on('connection', function (socket) {
     });
     socket.on('message7',function(message){
       changeButtonMode();
-    })
-    socket.on('message8',function(message)){
+    });
+    socket.on('message8',function(message){
       demo1();
-    }
+    });
 });
 
 
@@ -97,5 +97,9 @@ function demo1(){
 // 0 arret
 // 1 en avant
 // 2 en arriere
-// 3 gauche
-// 4 droite
+// 4 gauche
+// 3 droite
+// 5 up
+// 6 down
+// 7 mode
+// 8 demo
