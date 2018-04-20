@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <link rel="stylesheet" href="./css/mobile.css" media="screen and (max-width: 900px)">
+    <link rel="stylesheet" type="text/css"  href="./css/mobile.css" media="screen and (max-width: 900px)">
     <link rel="stylesheet" type="text/css" href="./css/bootstrap.css">
-    <script src="./js/bootstrap.js"></script>
+    <script type="text/javascript" src="./js/bootstrap.js"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -81,9 +81,8 @@
 
     <script src="socket.io/socket.io.js"></script>
     <script>
-      var vs = require('./js/bootstrap.js');
 
-      var socket = io.connect('http://192.168.0.101:8080');
+      var socket = io.connect('http://192.168.0.103:8080');
 
       function testSendForward(){
         socket.emit('message1','message');

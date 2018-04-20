@@ -8,12 +8,42 @@ client.connect(8080, '192.168.0.113', function(){
   client.write('robotSelected:Hexapod 1');
 });
 
-// Chargement du fichier index.html affiché au client
-var server = http.createServer(function(req, res) {
-    fs.readFile('index.html', 'utf-8', function(error, content) {
-        res.writeHead(200, {"Content-Type": "text/html"});
-        res.end(content);
+fs.readFile('./index.html', 'utf-8', function(error, content) {
+	htmlFile = content;
     });
+
+fs.readFile('./css/mobile.css', 'utf-8', function(error, content) {
+	css1 = content;
+    });
+
+fs.readFile('./css/bootstrap.css', 'utf-8', function(error, content) {
+	css2 = content;
+    });
+
+fs.readFile('./img/game.png', function(error, content) {
+	img = content;
+    });
+
+// Chargement du fichier index.html et des css affichés au client
+var server = http.createServer(function(req, res) {
+    switch(req.url) {
+	case "/css/mobile.css":
+		res.writeHead(200,{"Content-Type":"text/css"});
+		res.write(css1);
+		break;
+	case "/css/bootstrap.css":
+		res.writeHead(200,{"Content-Type":"text/css"});
+		res.write(css2);
+		break;
+	case "/img/game.png":
+		res.writeHead(200,{"Content-Type":"image/png"});
+		res.write(img);
+		break;
+	default : 
+		res.writeHead(200,{"Content-Type":"text/html"});
+		res.write(htmlFile);
+	}
+	res.end();
 });
 
 // Chargement de socket.io
