@@ -254,64 +254,80 @@ function controlRobot(data, sock, fs, mqttClient, request, setup) {
           mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
           break;
         case '8':
-          /*Stand up*/
-          mqttClient.publish(setup.tin, dataPacketUpJSON, {qos: setup.qos});
-          /*Put its right front leg up*/
-          /*
-          for(var i = 0; i<3; i++) { //needs to be in the 3rd button mode to move a single leg
-            mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
-            mqttClient.publish(setup.tin, dataPacketStopJSON, {qos: setup.qos});
-          }
-          */
-          switchMode(3);
-          mqttClient.publish(setup.tin, dataPacketGoForwardJSON, {qos: setup.qos});
-          /*Say hi !*/
-          setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,128,254,1,0),{qos: setup.qos});},3000);
-          setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,128,1,254,0),{qos: setup.qos});},1000);
-          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},3000);
-          /*Go Forward during 3 sec*/
-          /*
-          for(var j = 0; j<2; j++) { //needs to be in the 1st button mode to move a single leg
-            mqttClient.publish(setup.tin, dataPacketModeJSON, {qos: setup.qos});
-            mqttClient.publish(setup.tin, dataPacketStopJSON, {qos: setup.qos});
-          }
-          */
-          switchMode(2);
-          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketGoForwardJSON,{qos: setup.qos});},1000);
-          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},2000);
-          /*Go right*/
-          setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,254,128,128,0),{qos: setup.qos});},2000);
-          /*Go left*/
-          setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,1,128,128,0),{qos: setup.qos});},2000);
-          /*Swing*/
-          var j=128;
-          for(i = 1; i<255; i++) {
-              if(i<128) {
-                  j+=1;
-                  hexapodMovement(128,128,i,j,0);
-              }
-              else if(i>=128){
-                  j-=1;
-                  hexapodMovement(128,128,i,j,0);
-              }
-              
-          }
-          for(i = 254; i>0; i--) {
-              if(i<128) {
-                  j+=1;
-                  hexapodMovement(128,128,i,j,0);
-              }
-              else if(i>=128){
-                  j-=1;
-                  hexapodMovement(128,128,i,j,0);
-              }
-          }
-          /*Stand up as far as possible*/
-          setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(1,128,128,128,0),{qos: setup.qos});},2000);
-          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},5000);
-          /*Sit down*/
-          setTimeout(function(){mqttClient.publish(setup.tin, dataPacketUpJSON,{qos: setup.qos});},5000);
-          /*end of the demo*/
+            //Sit up
+            var mode = 0;
+            var timer = 0;
+            setTimeout(function(){mqttClient.publish(setup.tin, dataPacketUpJSON,{qos: setup.qos});},timer);
+            timer = timer + 500;
+            setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},timer);
+            timer = timer + 500;
+            //Put its right front leg up
+            var modeDelay = switchMode(3);
+            timer = timer + 500;
+            setTimeout(function(){mqttClient.publish(setup.tin, dataPacketGoForwardJSON, {qos: setup.qos});},timer);
+            timer = timer + 500;
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,128,254,1,0),{qos: setup.qos});},timer);
+            timer = timer + 500;
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,128,1,254,0),{qos: setup.qos});},timer);
+            timer = timer + 500;
+            setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},timer);
+            timer = timer + 500;
+            //Go Forward during 3 sec
+            switchMode(0);
+            setTimeout(function(){mqttClient.publish(setup.tin, dataPacketGoForwardJSON,{qos: setup.qos});},timer);
+            timer = timer + 2000;
+            setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},timer);
+            timer = timer + 2000;
+            //Go right
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,128,128,254,0),{qos: setup.qos});},timer);
+            timer = timer + 2000;
+            //Go left
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,128,128,1,0),{qos: setup.qos});},timer);
+            timer = timer + 2000;
+            //Turn right
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,254,128,128,0),{qos: setup.qos});},timer);
+            timer = timer + 2000;
+            //Turn left
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,1,128,128,0),{qos: setup.qos});},timer);
+            timer = timer + 2000;
+            setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},timer);
+            timer = timer + 500;
+            switchMode(2);
+            //Swing
+            //Go right
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,128,128,254,0),{qos: setup.qos});},timer);
+            timer = timer + 500;
+            //Go left
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,128,128,1,0),{qos: setup.qos});},timer);
+            timer = timer + 500;
+            //Turn right
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,254,128,128,0),{qos: setup.qos});},timer);
+            timer = timer + 500;
+            //Turn left
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,1,128,128,0),{qos: setup.qos});},timer);
+            timer = timer + 500;
+            //Combinations of twice
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(1,128,128,254,0),{qos: setup.qos});},timer);
+            timer = timer + 500;
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(255,128,128,1,0),{qos: setup.qos});},timer);
+            timer = timer + 500;
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,254,1,128,0),{qos: setup.qos});},timer);
+            timer = timer + 500;
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(128,1,254,128,0),{qos: setup.qos});},timer);
+            timer = timer + 5000;
+            setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},timer);
+            //Stand up as far as possible
+            timer = timer + 500;
+            setTimeout(function(){mqttClient.publish(setup.tin, hexapodMovement(1,128,128,128,0),{qos: setup.qos});},timer);
+            timer = timer + 3000;
+            setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},timer);
+            timer = timer + 500;
+            switchMode(0);
+            //Sit down
+            setTimeout(function(){mqttClient.publish(setup.tin, dataPacketUpJSON,{qos: setup.qos});},timer);
+            timer = timer + 500;
+            setTimeout(function(){mqttClient.publish(setup.tin, dataPacketStopJSON,{qos: setup.qos});},timer);
+            //end of the demo*/
           break;
         default:
           console.log("Not Implement yet!");
